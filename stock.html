@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <title>Kozmetik Mağazası</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="/css/sb-admin-2.min.css" rel="stylesheet">
+    
+    <!-- Chart.js kütüphanesi -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Custom styles for this page -->
+    <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+</head>
+
+<body id="page-top">
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <ul class="navbar-nav sidebar sidebar-dark accordion" style="background-color: black;" id="accordionSidebar">
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/admin">
+                <div class="sidebar-brand-text mx-3">Hoş geldiniz Koray A.</div>
+            </a>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item">
+                <a class="nav-link" href="/admin">
+                    <i class="fa-solid fa-house"></i>
+                    <span>ANA SAYFA</span>
+                </a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Genel Arayüz
+            </div>
+
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/urunler">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Ürünler</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/satislar">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Ürün Bazında Mağaza Satışı</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/kategoriler">
+                    <i class="fa-solid fa-list"></i>
+                    <span>Kategorilere Ait Ürünler</span>
+                </a>
+            </li>
+
+            
+
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/sezonlar">
+                    <i class="fa-regular fa-calendar-days"></i>
+                    <span>Sezon ve Yıla Göre Satış</span>
+                </a>
+            </li>
+
+            <li class="nav-item active">
+                <a class="nav-link" href="/admin/stock">
+                    <i class="fas fa-boxes"></i>
+                    <span>Stok Yönetimi</span>
+                </a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider d-none d-md-block">
+        </ul>
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+            <!-- Main Content -->
+            <div id="content">
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                    <!-- Sidebar Toggle (Topbar) -->
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto">
+                        <div class="topbar-divider d-none d-sm-block"></div>
+                        <!-- Nav Item - User Information -->
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Koray A.</span>
+                                <img class="img-profile rounded-circle" src="/img/undraw_profile.svg">
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid mt-4">
+                    <!-- Page Heading -->
+                    <h1 class="h3 mb-2 text-gray-800">STOK YÖNETİMİ</h1>
+                    <p class="mb-4">Mağazanızın stok bilgilerine aşağıdan ulaşabilirsiniz.</p>
+
+                    <!-- Stok Durumu Kartları -->
+                    <div class="row">
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-primary shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                                Toplam Stok Değeri</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="totalStockValue">₺0</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-warning shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                                Kritik Stok Sayısı</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="criticalStockCount">0</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-exclamation-triangle fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Stok Tablosu -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                            <h6 class="m-0 font-weight-bold text-primary">Stok Durumu</h6>
+                            <button class="btn btn-primary btn-sm" onclick="yeniStokGirisi()">
+                                <i class="fas fa-plus fa-sm"></i> Yeni Stok Girişi
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="stockTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>Ürün</th>
+                                            <th>Mağaza</th>
+                                            <th>Miktar</th>
+                                            <th>Minimum Stok</th>
+                                            <th>Durum</th>
+                                            <th>Son Güncelleme</th>
+                                            <th>İşlemler</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="stockTableBody"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Kar-Zarar Analizi Grafiği -->
+                    <div class="col-xl-12 col-lg-12">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Ürün Bazlı Kar-Zarar Analizi</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-bar">
+                                    <canvas id="profitAnalysisChart"></canvas>
+                                </div>
+                                <hr>
+                                <div class="mt-4 text-center small" id="profitLegend"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mağaza İyileştirme Önerileri -->
+                    <div class="col-xl-12 col-lg-12 mt-4">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Mağaza İyileştirme Önerileri</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="storeImprovementsTable">
+                                        <thead>
+                                            <tr>
+                                                <th>Mağaza</th>
+                                                <th>Toplam Satış</th>
+                                                <th>Ortalama Satış</th>
+                                                <th>Toplam Ciro</th>
+                                                <th>Ürün Çeşitliliği</th>
+                                                <th>Kritik Stok</th>
+                                                <th>İyileştirme Önerileri</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="storeImprovementsBody"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Koray Copyright © Tüm Hakları Saklıdır 2024</span>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="/js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="/js/demo/datatables-demo.js"></script>
+
+    <!-- Stok Güncelleme Modalı -->
+    <div class="modal fade" id="stockUpdateModal" tabindex="-1" role="dialog" aria-labelledby="stockUpdateModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="stockUpdateModalLabel">Stok Güncelle</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="stockUpdateForm">
+                        <input type="hidden" id="stockId">
+                        <div class="form-group">
+                            <label for="quantity">Miktar</label>
+                            <input type="number" class="form-control" id="quantity" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="minStock">Minimum Stok</label>
+                            <input type="number" class="form-control" id="minStock" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">İptal</button>
+                    <button type="button" class="btn btn-primary" onclick="updateStock()">Güncelle</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Kritik Stok Modal -->
+    <div class="modal fade" id="criticalStockModal" tabindex="-1" role="dialog" aria-labelledby="criticalStockModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="criticalStockModalLabel">Kritik Stok Seviyesindeki Ürünler</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Ürün</th>
+                                    <th>Mağaza</th>
+                                    <th>Mevcut Stok</th>
+                                    <th>Minimum Stok</th>
+                                    <th>Durum</th>
+                                </tr>
+                            </thead>
+                            <tbody id="criticalStockTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Stok tablosunu doldur
+        fetch("/admin/fetch-stock")
+            .then(response => response.json())
+            .then(data => {
+                let totalValue = 0;
+                let criticalCount = 0;
+                const tableData = [];
+
+                data.forEach(item => {
+                    const stockValue = item.miktar * item.fiyat;
+                    totalValue += stockValue;
+
+                    if (item.stok_durumu === 'Kritik') {
+                        criticalCount++;
+                    }
+
+                    tableData.push([
+                        item.urun_ad,
+                        item.magaza_ad,
+                        item.miktar,
+                        item.minimum_stok,
+                        `<span class="badge badge-${item.stok_durumu === 'Kritik' ? 'danger' : 
+                            item.stok_durumu === 'Uyarı' ? 'warning' : 'success'}">${item.stok_durumu}</span>`,
+                        new Date(item.son_guncelleme).toLocaleDateString('tr-TR'),
+                        `<div class="btn-group">
+                            <button class="btn btn-primary btn-sm" onclick="stokGuncelle(${item.stok_id})">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn btn-danger btn-sm" onclick="stokSil(${item.stok_id})">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>`
+                    ]);
+                });
+
+                // DataTables'ı başlat
+                if ($.fn.DataTable.isDataTable('#stockTable')) {
+                    $('#stockTable').DataTable().destroy();
+                }
+                
+                $('#stockTable').DataTable({
+                    data: tableData,
+                    language: {
+                        url: "//cdn.datatables.net/plug-ins/1.10.24/i18n/Turkish.json"
+                    },
+                    pageLength: 10,
+                    lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "Tümü"]],
+                    order: [[4, "asc"]], // Durum sütununa göre sırala
+                    columnDefs: [
+                        { orderable: false, targets: 6 }, // İşlemler sütunu sıralanamaz
+                        { 
+                            targets: 4,
+                            orderData: [4], // Durum sütununu sıralamak için özel indeks
+                            createdCell: function (td, cellData, rowData, row, col) {
+                                $(td).addClass('text-center');
+                            }
+                        }
+                    ],
+                    dom: '<"top"lf>rt<"bottom"ip><"clear">',
+                    responsive: true
+                });
+
+                // Stok değeri ve kritik stok sayısını güncelle
+                document.getElementById("totalStockValue").textContent = 
+                    new Intl.NumberFormat('tr-TR', { 
+                        style: 'currency', 
+                        currency: 'TRY',
+                        minimumFractionDigits: 0 
+                    }).format(totalValue);
+                
+                document.getElementById("criticalStockCount").textContent = criticalCount;
+            })
+            .catch(error => console.error('Stok verisi yüklenirken hata:', error));
+
+        // Kar-Zarar grafiğini oluştur
+        fetch("/admin/fetch-profit-analysis")
+            .then(response => response.json())
+            .then(data => {
+                const ctx = document.getElementById("profitChart");
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: data.map(item => item.urun_ad),
+                        datasets: [{
+                            label: 'Kar/Zarar (TL)',
+                            data: data.map(item => item.kar_zarar),
+                            backgroundColor: data.map(item => 
+                                item.kar_zarar >= 0 ? 'rgba(78, 115, 223, 0.5)' : 'rgba(231, 74, 59, 0.5)'
+                            ),
+                            borderColor: data.map(item => 
+                                item.kar_zarar >= 0 ? 'rgb(78, 115, 223)' : 'rgb(231, 74, 59)'
+                            ),
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    callback: function(value) {
+                                        return new Intl.NumberFormat('tr-TR', { 
+                                            style: 'currency', 
+                                            currency: 'TRY' 
+                                        }).format(value);
+                                    }
+                                }
+                            }
+                        },
+                        plugins: {
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        return new Intl.NumberFormat('tr-TR', { 
+                                            style: 'currency', 
+                                            currency: 'TRY' 
+                                        }).format(context.raw);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            });
+
+        // Stok işlemleri için fonksiyonlar
+        function yeniStokGirisi() {
+            // Yeni stok girişi modalını aç
+            alert("Yeni stok girişi modalı eklenecek");
+        }
+
+        function stokGuncelle(stokId) {
+            $('#stockId').val(stokId);
+            $('#stockUpdateModal').modal('show');
+        }
+
+        function updateStock() {
+            const stockId = $('#stockId').val();
+            const quantity = $('#quantity').val();
+            const minStock = $('#minStock').val();
+
+            fetch('/admin/update-stock', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    stokId: stockId,
+                    miktar: quantity,
+                    minimumStok: minStock
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    $('#stockUpdateModal').modal('hide');
+                    location.reload();
+                } else {
+                    alert('Stok güncellenirken bir hata oluştu');
+                }
+            })
+            .catch(error => console.error('Stok güncelleme hatası:', error));
+        }
+
+        function stokSil(stokId) {
+            if (confirm('Bu stok kaydını silmek istediğinizden emin misiniz?')) {
+                fetch('/admin/delete-stock/' + stokId, {
+                    method: 'DELETE'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        location.reload();
+                    } else {
+                        alert('Stok silinirken bir hata oluştu');
+                    }
+                })
+                .catch(error => console.error('Stok silme hatası:', error));
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            let totalValue = 0;
+            let criticalCount = 0;
+
+            // Stok verilerini çek
+            fetch('/admin/fetch-stock')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Stok verileri:', data); // Debug için
+                    const tbody = document.getElementById('stockTableBody');
+                    tbody.innerHTML = ''; // Tabloyu temizle
+
+                    data.forEach(item => {
+                        const row = document.createElement('tr');
+                        const stockValue = item.miktar * item.fiyat;
+                        totalValue += stockValue;
+
+                        if (item.stok_durumu === 'Kritik') {
+                            criticalCount++;
+                        }
+
+                        row.innerHTML = `
+                            <td>${item.urun_ad}</td>
+                            <td>${item.magaza_ad}</td>
+                            <td>${item.miktar}</td>
+                            <td>${item.minimum_stok}</td>
+                            <td>
+                                <span class="badge badge-${item.stok_durumu === 'Kritik' ? 'danger' : 
+                                                 item.stok_durumu === 'Uyarı' ? 'warning' : 'success'}">
+                                    ${item.stok_durumu}
+                                </span>
+                            </td>
+                            <td>${new Date(item.son_guncelleme).toLocaleDateString('tr-TR')}</td>
+                            <td>
+                                <button class="btn btn-primary btn-sm" onclick="stokGuncelle(${item.stok_id})">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn btn-danger btn-sm" onclick="stokSil(${item.stok_id})">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        `;
+                        tbody.appendChild(row);
+                    });
+
+                    // Toplam stok değerini güncelle
+                    document.getElementById('totalStockValue').innerText = 
+                        new Intl.NumberFormat('tr-TR', { style: 'currency', currency: 'TRY' }).format(totalValue);
+                    
+                    // Kritik stok sayısını güncelle
+                    document.getElementById('criticalStockCount').innerText = criticalCount;
+                })
+                .catch(error => {
+                    console.error('Veri çekme hatası:', error);
+                    alert('Stok verileri yüklenirken bir hata oluştu.');
+                });
+        });
+
+        // Grafik Script'i
+        document.addEventListener('DOMContentLoaded', function() {
+            const colors = [
+                '#4e73df', '#1cc88a', '#36b9cc', '#f6c23e', '#e74a3b', 
+                '#6f42c1', '#fd7e14', '#20c9a6', '#e83e8c', '#f8b400'
+            ];
+
+            fetch('/admin/fetch-profit-analysis')
+                .then(response => response.json())
+                .then(data => {
+                    const ctx = document.getElementById('profitChart').getContext('2d');
+                    
+                    new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: data.map(item => `${item.marka} - ${item.urun_ad}`),
+                            datasets: [
+                                {
+                                    label: 'Kar/Zarar',
+                                    data: data.map(item => item.kar_zarar),
+                                    backgroundColor: data.map(item => 
+                                        item.kar_zarar >= 0 ? '#1cc88a' : '#e74a3b'
+                                    ),
+                                    borderWidth: 1
+                                }
+                            ]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            scales: {
+                                xAxes: [{
+                                    ticks: {
+                                        autoSkip: false,
+                                        maxRotation: 45,
+                                        minRotation: 45
+                                    }
+                                }],
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero: true,
+                                        callback: function(value) {
+                                            return new Intl.NumberFormat('tr-TR', {
+                                                style: 'currency',
+                                                currency: 'TRY',
+                                                minimumFractionDigits: 0
+                                            }).format(value);
+                                        }
+                                    }
+                                }]
+                            },
+                            tooltips: {
+                                callbacks: {
+                                    label: function(tooltipItem, data) {
+                                        const item = data.datasets[tooltipItem.datasetIndex];
+                                        const value = item.data[tooltipItem.index];
+                                        const percent = data.datasets[0].data[tooltipItem.index];
+                                        
+                                        return [
+                                            `Kar/Zarar: ${new Intl.NumberFormat('tr-TR', {
+                                                style: 'currency',
+                                                currency: 'TRY',
+                                                minimumFractionDigits: 0
+                                            }).format(value)}`,
+                                            `Kar Yüzdesi: %${percent.toFixed(2)}`
+                                        ];
+                                    }
+                                }
+                            }
+                        }
+                    });
+                })
+                .catch(error => console.error('Kar/Zarar analizi yüklenirken hata:', error));
+        });
+
+        // Kar-Zarar Analizi Script
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('/admin/fetch-profit-analysis')
+                .then(response => response.json())
+                .then(data => {
+                    // Verileri kontrol et ve geçersiz değerleri filtrele
+                    const validData = data.filter(item => 
+                        !isNaN(item.potansiyel_kar) && 
+                        !isNaN(item.kar_yuzdesi) && 
+                        item.potansiyel_kar != null
+                    );
+
+                    const ctx = document.getElementById('profitAnalysisChart').getContext('2d');
+                    
+                    // Verileri hazırla
+                    const labels = validData.map(item => `${item.urun_ad} (${item.marka})`);
+                    const potansiyelKarlar = validData.map(item => Number(item.potansiyel_kar));
+                    const karYuzdeleri = validData.map(item => Number(item.kar_yuzdesi));
+                    
+                    // Renk paleti
+                    const backgroundColors = validData.map(item => 
+                        item.potansiyel_kar > 0 ? 'rgba(28, 200, 138, 0.5)' : 'rgba(231, 74, 59, 0.5)'
+                    );
+                    const borderColors = validData.map(item => 
+                        item.potansiyel_kar > 0 ? 'rgb(28, 200, 138)' : 'rgb(231, 74, 59)'
+                    );
+
+                    new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: labels,
+                            datasets: [
+                                {
+                                    label: 'Potansiyel Kar (TL)',
+                                    data: potansiyelKarlar,
+                                    backgroundColor: backgroundColors,
+                                    borderColor: borderColors,
+                                    borderWidth: 1
+                                },
+                                {
+                                    label: 'Kar Yüzdesi (%)',
+                                    data: karYuzdeleri,
+                                    type: 'line',
+                                    fill: false,
+                                    borderColor: 'rgb(78, 115, 223)',
+                                    tension: 0.1
+                                }
+                            ]
+                        },
+                        options: {
+                            maintainAspectRatio: false,
+                            layout: {
+                                padding: {
+                                    left: 10,
+                                    right: 25,
+                                    top: 25,
+                                    bottom: 0
+                                }
+                            },
+                            scales: {
+                                xAxes: [{
+                                    gridLines: {
+                                        display: false,
+                                        drawBorder: false
+                                    },
+                                    ticks: {
+                                        maxTicksLimit: 20,
+                                        callback: function(value) {
+                                            if (value.length > 15) {
+                                                return value.substr(0, 15) + '...';
+                                            }
+                                            return value;
+                                        }
+                                    }
+                                }],
+                                yAxes: [{
+                                    ticks: {
+                                        maxTicksLimit: 5,
+                                        padding: 10,
+                                        callback: function(value) {
+                                            return value.toLocaleString('tr-TR', { 
+                                                style: 'currency', 
+                                                currency: 'TRY',
+                                                minimumFractionDigits: 0,
+                                                maximumFractionDigits: 0
+                                            });
+                                        }
+                                    },
+                                    gridLines: {
+                                        color: "rgb(234, 236, 244)",
+                                        zeroLineColor: "rgb(234, 236, 244)",
+                                        drawBorder: false,
+                                        borderDash: [2],
+                                        zeroLineBorderDash: [2]
+                                    }
+                                }]
+                            },
+                            legend: {
+                                display: true,
+                                position: 'bottom'
+                            },
+                            tooltips: {
+                                backgroundColor: "rgb(255,255,255)",
+                                bodyFontColor: "#858796",
+                                titleMarginBottom: 10,
+                                titleFontColor: '#6e707e',
+                                titleFontSize: 14,
+                                borderColor: '#dddfeb',
+                                borderWidth: 1,
+                                xPadding: 15,
+                                yPadding: 15,
+                                displayColors: false,
+                                intersect: false,
+                                mode: 'index',
+                                caretPadding: 10,
+                                callbacks: {
+                                    label: function(tooltipItem, chart) {
+                                        const datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+                                        const value = tooltipItem.yLabel;
+                                        if (datasetLabel.includes('TL')) {
+                                            return datasetLabel + ': ' + value.toLocaleString('tr-TR', {
+                                                style: 'currency',
+                                                currency: 'TRY',
+                                                minimumFractionDigits: 0,
+                                                maximumFractionDigits: 0
+                                            });
+                                        } else {
+                                            return datasetLabel + ': %' + value.toFixed(2);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+
+                    // İstatistik özeti
+                    const totalPotentialProfit = potansiyelKarlar.reduce((sum, value) => sum + value, 0);
+                    const validMargins = karYuzdeleri.filter(value => !isNaN(value));
+                    const avgProfitMargin = validMargins.length > 0 
+                        ? validMargins.reduce((sum, value) => sum + value, 0) / validMargins.length 
+                        : 0;
+
+                    const summaryHtml = `
+                        <div class="d-flex justify-content-around align-items-center">
+                            <div class="text-center">
+                                <span class="font-weight-bold text-primary">Toplam Potansiyel Kar: </span>
+                                <span class="h5 mb-0 font-weight-bold text-gray-800">
+                                    ${new Intl.NumberFormat('tr-TR', {
+                                        style: 'currency',
+                                        currency: 'TRY',
+                                        maximumFractionDigits: 0
+                                    }).format(totalPotentialProfit || 0)}
+                                </span>
+                            </div>
+                            <div class="text-center">
+                                <span class="font-weight-bold text-success">Ortalama Kar Marjı: </span>
+                                <span class="h5 mb-0 font-weight-bold text-gray-800">%${(avgProfitMargin || 0).toFixed(1)}</span>
+                            </div>
+                        </div>
+                    `;
+                    document.getElementById('profitLegend').innerHTML = summaryHtml;
+                })
+                .catch(error => {
+                    console.error('Veri yükleme hatası:', error);
+                    alert('Kar-zarar analizi verileri yüklenirken bir hata oluştu.');
+                });
+        });
+
+        // Mağaza İyileştirme Script
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('/admin/fetch-store-improvements')
+                .then(response => response.json())
+                .then(data => {
+                    const tbody = document.getElementById('storeImprovementsBody');
+                    
+                    data.forEach(store => {
+                        const row = document.createElement('tr');
+                        
+                        const onerilerHTML = store.oneriler.length > 0 
+                            ? `<ul class="mb-0 pl-3">
+                                ${store.oneriler.map(oneri => `<li>${oneri}</li>`).join('')}
+                               </ul>`
+                            : '<span class="text-success">İyileştirme önerisi yok</span>';
+                        
+                        row.innerHTML = `
+                            <td>${store.magaza_ad}</td>
+                            <td>${store.toplam_satis || 0}</td>
+                            <td>${new Intl.NumberFormat('tr-TR', {
+                                style: 'currency',
+                                currency: 'TRY',
+                                maximumFractionDigits: 0
+                            }).format(store.ortalama_satis || 0)}</td>
+                            <td>${new Intl.NumberFormat('tr-TR', {
+                                style: 'currency',
+                                currency: 'TRY',
+                                maximumFractionDigits: 0
+                            }).format(store.toplam_ciro || 0)}</td>
+                            <td>${store.urun_cesitliligi || 0}</td>
+                            <td>
+                                <button class="btn btn-warning btn-sm" onclick="showCriticalStockByStore('${store.magaza_ad}')">
+                                    <i class="fas fa-exclamation-triangle"></i> Kritik Stok
+                                </button>
+                            </td>
+                            <td>${onerilerHTML}</td>
+                        `;
+                        
+                        tbody.appendChild(row);
+                    });
+
+                    // DataTable özelliklerini ekle
+                    $(document).ready(function() {
+                        $('#storeImprovementsTable').DataTable({
+                            "language": {
+                                "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Turkish.json"
+                            },
+                            "order": [[3, "desc"]], // Toplam ciroya göre sırala
+                            "pageLength": 5,
+                            "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "Tümü"]]
+                        });
+                    });
+                })
+                .catch(error => {
+                    console.error('Veri yükleme hatası:', error);
+                    alert('Mağaza iyileştirme önerileri yüklenirken bir hata oluştu.');
+                });
+        });
+
+        function showCriticalStock() {
+            fetch('/admin/fetch-critical-stock-details')
+                .then(response => response.json())
+                .then(data => {
+                    const tbody = document.getElementById('criticalStockTableBody');
+                    tbody.innerHTML = '';
+
+                    data.forEach(item => {
+                        const row = document.createElement('tr');
+                        const statusClass = item.miktar <= item.minimum_stok ? 'danger' : 'warning';
+                        
+                        row.innerHTML = `
+                            <td>${item.urun_ad}</td>
+                            <td>${item.magaza_ad}</td>
+                            <td>${item.miktar}</td>
+                            <td>${item.minimum_stok}</td>
+                            <td>
+                                <span class="badge badge-${statusClass}">
+                                    ${item.miktar <= item.minimum_stok ? 'Kritik' : 'Uyarı'}
+                                </span>
+                            </td>
+                        `;
+                        tbody.appendChild(row);
+                    });
+
+                    $('#criticalStockModal').modal('show');
+                })
+                .catch(error => {
+                    console.error('Kritik stok verisi yüklenirken hata:', error);
+                    alert('Kritik stok verileri yüklenirken bir hata oluştu');
+                });
+        }
+
+        function showCriticalStockByStore(storeName) {
+            fetch('/admin/fetch-critical-stock-details')
+                .then(response => response.json())
+                .then(data => {
+                    const tbody = document.getElementById('criticalStockTableBody');
+                    tbody.innerHTML = '';
+
+                    // Sadece seçili mağazanın kritik stok verilerini filtrele
+                    const filteredData = data.filter(item => item.magaza_ad === storeName);
+
+                    filteredData.forEach(item => {
+                        const row = document.createElement('tr');
+                        const statusClass = item.miktar <= item.minimum_stok ? 'danger' : 'warning';
+                        
+                        row.innerHTML = `
+                            <td>${item.urun_ad}</td>
+                            <td>${item.magaza_ad}</td>
+                            <td>${item.miktar}</td>
+                            <td>${item.minimum_stok}</td>
+                            <td>
+                                <span class="badge badge-${statusClass}">
+                                    ${item.miktar <= item.minimum_stok ? 'Kritik' : 'Uyarı'}
+                                </span>
+                            </td>
+                        `;
+                        tbody.appendChild(row);
+                    });
+
+                    // Modal başlığını güncelle
+                    document.getElementById('criticalStockModalLabel').textContent = 
+                        `${storeName} - Kritik Stok Seviyesindeki Ürünler`;
+
+                    $('#criticalStockModal').modal('show');
+                })
+                .catch(error => {
+                    console.error('Kritik stok verisi yüklenirken hata:', error);
+                    alert('Kritik stok verileri yüklenirken bir hata oluştu');
+                });
+        }
+    </script>
+</body>
+</html> 

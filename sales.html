@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Ürün Bazında Satışlar</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Custom fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    
+    <!-- Custom styles -->
+    <link href="/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    
+    <!-- Chart.js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.css">
+</head>
+
+<body id="page-top">
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <ul class="navbar-nav sidebar sidebar-dark accordion" style="background-color: black;" id="accordionSidebar">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/admin">
+                <div class="sidebar-brand-text mx-3">Hoş geldiniz Koray A.</div>
+            </a>
+
+            <hr class="sidebar-divider my-0">
+
+            <!-- Menü öğeleri -->
+            <li class="nav-item">
+                <a class="nav-link" href="/admin">
+                    <i class="fa-solid fa-house"></i>
+                    <span>ANA SAYFA</span>
+                </a>
+            </li>
+
+            <hr class="sidebar-divider">
+
+            <div class="sidebar-heading">Genel Arayüz</div>
+
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/urunler">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Ürünler</span>
+                </a>
+            </li>
+
+            <li class="nav-item active">
+                <a class="nav-link" href="/admin/satislar">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Ürün Bazında Mağaza Satışları</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/kategoriler">
+                    <i class="fa-solid fa-list"></i>
+                    <span>Kategorilere Ait Ürünler</span>
+                </a>
+            </li>
+
+            
+
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/sezonlar">
+                    <i class="fa-regular fa-calendar-days"></i>
+                    <span>Sezon ve Yıla Göre Satış</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/stok">
+                    <i class="fas fa-boxes"></i>
+                    <span>Stok Yönetimi</span>
+                </a>
+            </li>
+
+            <hr class="sidebar-divider d-none d-md-block">
+
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+        </ul>
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+            <div id="content">
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+
+                    <!-- Arama -->
+                    <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                        <div class="input-group">
+                            <input type="text" class="form-control bg-light border-0 small" placeholder="Arama yapmak için yazın...">
+                            <div class="input-group-append">
+                                <button class="btn" style="background-color: black;" type="button">
+                                    <i class="fas fa-search fa-sm" style="color: white;"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <!-- Kullanıcı Bilgisi -->
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Koray AYDIN</span>
+                                <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in">
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Çıkış Yap
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
+
+                <!-- Ana İçerik -->
+                <div class="container-fluid">
+                    <h1 class="h3 mb-2 text-gray-800">Ürün Bazında Mağaza Satışları</h1>
+                    <p class="mb-4">Mağazanızın ürünler için mağazalara göre satış detaylarına aşağıdan ulaşabilirsiniz.</p>
+
+                    <!-- Grafikler -->
+                    <div class="row">
+                        <!-- Bar Chart -->
+                        <div class="col-xl-8 col-lg-7">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Mağaza Bazında Satış Dağılımı</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="chart-bar" style="height: 400px;">
+                                        <canvas id="salesBarChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pie Chart -->
+                        <div class="col-xl-4 col-lg-5">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Kategori Dağılımı</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="chart-pie" style="height: 400px;">
+                                        <canvas id="salesPieChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mağaza Önerileri -->
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Mağaza İyileştirme Önerileri</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div id="recommendations"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Koray Copyright © Tüm Hakları Saklıdır 2024</span>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Scroll to Top Button -->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal -->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Çıkış Yapmak İstiyor musunuz?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Oturumu sonlandırmak için "Çıkış" butonuna tıklayın.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">İptal</button>
+                    <a class="btn btn-primary" href="login.html">Çıkış</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="/js/sb-admin-2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.bundle.min.js"></script>
+
+    <!-- Ana Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const colors = [
+                '#4e73df', '#1cc88a', '#36b9cc', '#f6c23e', '#e74a3b', 
+                '#6f42c1', '#fd7e14', '#20c9a6', '#e83e8c', '#f8b400'
+            ];
+
+            fetch('/admin/fetch-product-store-sales')
+                .then(response => response.json())
+                .then(data => {
+                    const storeData = {};
+                    const categoryData = {};
+                    
+                    data.forEach(item => {
+                        if (!storeData[item.magaza_ad]) storeData[item.magaza_ad] = 0;
+                        if (!categoryData[item.kategori_ad]) categoryData[item.kategori_ad] = 0;
+                        
+                        storeData[item.magaza_ad] += parseFloat(item.toplam_satis);
+                        categoryData[item.kategori_ad] += parseFloat(item.toplam_satis);
+                    });
+
+                    createBarChart(storeData, colors);
+                    createPieChart(categoryData, colors);
+                    createRecommendations();
+                })
+                .catch(error => console.error('Veri yükleme hatası:', error));
+        });
+
+        function createBarChart(storeData, colors) {
+            const ctx = document.getElementById('salesBarChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(storeData),
+                    datasets: [{
+                        label: 'Toplam Satış (TL)',
+                        data: Object.values(storeData),
+                        backgroundColor: colors
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true,
+                                callback: value => new Intl.NumberFormat('tr-TR', {
+                                    style: 'currency',
+                                    currency: 'TRY',
+                                    minimumFractionDigits: 0
+                                }).format(value)
+                            }
+                        }]
+                    }
+                }
+            });
+        }
+
+        function createPieChart(categoryData, colors) {
+            const ctx = document.getElementById('salesPieChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: Object.keys(categoryData),
+                    datasets: [{
+                        data: Object.values(categoryData),
+                        backgroundColor: colors
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    legend: {
+                        position: 'right'
+                    }
+                }
+            });
+        }
+
+        function createRecommendations() {
+            const recommendations = [
+                {
+                    store: 'Merkez Mağaza',
+                    bestSeller: 'Parfümler',
+                    needsImprovement: 'Saç Bakım',
+                    suggestion: 'Merkez lokasyonunuzda parfüm ve cilt bakım ürünlerine olan talep yüksek. Lüks markaların stok çeşitliliğini artırmanızı ve VIP müşteri programı başlatmanızı öneriyoruz.',
+                    color: 'primary'
+                },
+                {
+                    store: 'AVM Şubesi',
+                    bestSeller: 'Makyaj Ürünleri',
+                    needsImprovement: 'Güneş Ürünleri',
+                    suggestion: 'AVM mağazanızda makyaj ürünleri ön planda. Hafta sonu özel indirimler ve makyaj workshop\'ları düzenlemenizi öneriyoruz.',
+                    color: 'success'
+                },
+                {
+                    store: 'Kadıköy Şubesi',
+                    bestSeller: 'Makyaj Ürünleri',
+                    needsImprovement: 'Güneş ve Cilt Bakım',
+                    suggestion: 'Genç nüfusun yoğun olduğu bu lokasyonda güneş ürünleri ve cilt bakım satışları düşük. Sosyal medya kampanyaları ve üniversite öğrencilerine özel indirimler planlamanızı öneriyoruz.',
+                    color: 'info'
+                }
+            ];
+
+            const html = recommendations.map(rec => `
+                <div class="col-lg-4 mb-4">
+                    <div class="card border-left-${rec.color} shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="h5 mb-0 font-weight-bold text-${rec.color} mb-3">${rec.store}</div>
+                                    <div class="text-xs mb-2">
+                                        <i class="fas fa-star text-warning"></i> En çok satan: ${rec.bestSeller}
+                                    </div>
+                                    <div class="text-xs mb-2">
+                                        <i class="fas fa-exclamation-circle text-danger"></i> Geliştirilmeli: ${rec.needsImprovement}
+                                    </div>
+                                    <div class="text-xs">${rec.suggestion}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            document.getElementById('recommendations').innerHTML = `<div class="row">${html}</div>`;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <title>Kozmetik Mağazası</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="/css/sb-admin-2.min.css" rel="stylesheet">
+</head>
+
+<body id="page-top">
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <ul class="navbar-nav sidebar sidebar-dark accordion" style="background-color: black;" id="accordionSidebar">
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/admin">
+                <div class="sidebar-brand-text mx-3">Hoş geldiniz Koray A.</div>
+            </a>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item active">
+                <a class="nav-link" href="/admin">
+                    <i class="fa-solid fa-house"></i>
+                    <span>ANA SAYFA</span>
+                </a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Genel Arayüz
+            </div>
+
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/urunler">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Ürünler</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/satislar">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Ürün Bazında Mağaza Satışı</span>
+                </a>
+            </li>
+
+
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/kategoriler">
+                    <i class="fa-solid fa-list"></i>
+                    <span>Kategorilere Ait Ürünler</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/stok">
+                    <i class="fa-solid fa-boxes-stacked"></i>
+                    <span>Stok</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/sezonlar">
+                    <i class="fa-regular fa-calendar-days"></i>
+                    <span>Sezon ve Yıla Göre Satış</span>
+                </a>
+            </li>
+        </ul>
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+            <!-- Main Content -->
+            <div id="content">
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto">
+                        <!-- Nav Item - User Information -->
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Koray AYDIN</span>
+                                <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
+                            </a>
+                            <!-- Dropdown - User Information -->
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Çıkış Yap
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+                    <!-- Page Heading -->
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Yönetim Paneli</h1>
+                    </div>
+
+                    <!-- Content Row - İstatistik Kartları -->
+                    <div class="row">
+                        <!-- Toplam Ürün Kartı -->
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-primary shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                                Toplam Ürün</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="totalProducts">-</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-box fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Toplam Satış Kartı -->
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-success shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                                Toplam Satış</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="totalSales">-</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Stok Durumu Kartı -->
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-info shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                                Toplam Stok</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="totalStock">-</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-warehouse fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Kritik Stok Kartı -->
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-warning shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                                Kritik Stok</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="criticalStock">-</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-exclamation-triangle fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Content Row - Grafikler -->
+                    <div class="row">
+                        <!-- Ürün Satış Dağılımı -->
+                        <div class="col-xl-12 col-lg-12">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Ürün Satış Dağılımı</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="chart-pie pt-4" style="height: 400px;">
+                                        <canvas id="productPercentagesChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Content Row - Kategori -->
+                    <div class="row">
+                        <!-- Kategori Dağılımı -->
+                        <div class="col-xl-4 col-lg-4">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Kategori Dağılımı</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="chart-pie pt-4" style="height: 250px;">
+                                        <canvas id="categoryDistributionChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Mağaza Performansı -->
+                        <div class="col-xl-8 col-lg-8">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Mağaza Performans Grafiği</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="chart-bar pt-4" style="height: 300px;">
+                                        <canvas id="storePerformanceChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.container-fluid -->
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Koray Copyright © Tüm Hakları Saklıdır 2024</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
+        </div>
+        <!-- End of Content Wrapper -->
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="/js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Dashboard Scripts -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetchDashboardStats();
+            fetchCategoryDistribution();
+            fetchProductPercentages();
+            fetchStorePerformance();
+        });
+
+        function fetchDashboardStats() {
+            Promise.all([
+                fetch('/admin/fetch-total-products').then(r => r.json()),
+                fetch('/admin/fetch-total-sales').then(r => r.json()),
+                fetch('/admin/fetch-stock-status').then(r => r.json()),
+                fetch('/admin/fetch-critical-stock').then(r => r.json())
+            ]).then(([products, sales, stock, critical]) => {
+                document.getElementById('totalProducts').textContent = products.total;
+                document.getElementById('totalSales').textContent = formatCurrency(sales.total);
+                document.getElementById('totalStock').textContent = stock.total;
+                document.getElementById('criticalStock').textContent = critical.total;
+            }).catch(error => {
+                console.error('İstatistik yükleme hatası:', error);
+            });
+        }
+
+        function fetchCategoryDistribution() {
+            fetch('/admin/fetch-category-distribution')
+                .then(response => response.json())
+                .then(data => {
+                    const ctx = document.getElementById('categoryDistributionChart').getContext('2d');
+                    new Chart(ctx, {
+                        type: 'doughnut',
+                        data: {
+                            labels: data.map(item => item.kategori_ad),
+                            datasets: [{
+                                data: data.map(item => item.toplam_satis),
+                                backgroundColor: [
+                                    'rgba(78, 115, 223, 0.8)',
+                                    'rgba(28, 200, 138, 0.8)',
+                                    'rgba(246, 194, 62, 0.8)',
+                                    'rgba(231, 74, 59, 0.8)',
+                                    'rgba(54, 185, 204, 0.8)'
+                                ]
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: {
+                                    position: 'right',
+                                    align: 'start',
+                                    labels: {
+                                        font: {
+                                            size: 11
+                                        },
+                                        padding: 10
+                                    }
+                                },
+                                tooltip: {
+                                    callbacks: {
+                                        label: context => {
+                                            const label = context.label || '';
+                                            const value = formatCurrency(context.raw);
+                                            const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                            const percentage = ((context.raw / total) * 100).toFixed(1);
+                                            return `${label}: ${value} (%${percentage})`;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+                });
+        }
+
+        function formatCurrency(value) {
+            return new Intl.NumberFormat('tr-TR', {
+                style: 'currency',
+                currency: 'TRY',
+                minimumFractionDigits: 0
+            }).format(value);
+        }
+
+        function fetchProductPercentages() {
+            fetch('/admin/fetch-product-percentages')
+                .then(response => response.json())
+                .then(data => {
+                    const ctx = document.getElementById('productPercentagesChart').getContext('2d');
+                    
+                    // Daha fazla renk oluştur
+                    const generateColors = (count) => {
+                        const colors = [];
+                        for(let i = 0; i < count; i++) {
+                            const hue = (i * 360) / count;
+                            colors.push(`hsla(${hue}, 70%, 60%, 0.8)`);
+                        }
+                        return colors;
+                    };
+
+                    new Chart(ctx, {
+                        type: 'pie',
+                        data: {
+                            labels: data.map(item => {
+                                const total = data.reduce((sum, i) => sum + i.satis_adedi, 0);
+                                const percentage = ((item.satis_adedi / total) * 100).toFixed(1);
+                                return `${item.urun_ad} (${item.kategori_ad}) - %${percentage}`;
+                            }),
+                            datasets: [{
+                                data: data.map(item => item.satis_adedi),
+                                backgroundColor: generateColors(data.length)
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: {
+                                    position: 'right',
+                                    align: 'center',
+                                    labels: {
+                                        font: {
+                                            size: 12,
+                                            padding: 15
+                                        },
+                                        title: {
+                                            display: true,
+                                            text: 'Ürün Bazlı Satış Dağılımı',
+                                            font: {
+                                                size: 16
+                                            },
+                                            padding: 20
+                                        }
+                                    }
+                                },
+                                tooltip: {
+                                    callbacks: {
+                                        label: function(context) {
+                                            const value = context.raw;
+                                            const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                            const percentage = ((value / total) * 100).toFixed(1);
+                                            return `${value} adet (%${percentage})`;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+                });
+        }
+
+        function fetchStorePerformance() {
+            fetch('/admin/fetch-store-performance')
+                .then(response => response.json())
+                .then(data => {
+                     const ctx = document.getElementById('storePerformanceChart').getContext('2d');
+                     new Chart(ctx, {
+                         type: 'bar',
+                         data: {
+                             labels: data.map(item => item.magaza_ad),
+                             datasets: [{
+                                 label: 'Toplam Satış',
+                                 data: data.map(item => item.toplam_satis),
+                                 backgroundColor: 'rgba(28, 200, 138, 0.8)',
+                                 borderColor: 'rgba(28, 200, 138, 1)',
+                                 borderWidth: 1
+                             }]
+                         },
+                         options: {
+                             responsive: true,
+                             maintainAspectRatio: false,
+                             scales: {
+                                 y: {
+                                     beginAtZero: true,
+                                     ticks: {
+                                         callback: function(value) {
+                                             return formatCurrency(value);
+                                         }
+                                     }
+                                 }
+                             },
+                             plugins: {
+                                 legend: {
+                                     display: false
+                                 },
+                                 tooltip: {
+                                     callbacks: {
+                                         label: function(context) {
+                                             return formatCurrency(context.raw);
+                                         }
+                                     }
+                                 }
+                             }
+                         }
+                     });
+                 });
+        }
+    </script>
+</body>
+
+</html>
